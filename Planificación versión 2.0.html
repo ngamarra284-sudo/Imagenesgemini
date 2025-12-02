@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Planificación Zonal 2025-2026</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8f9fa;
+        }
+        .action-card {
+            transition: all 0.3s ease;
+            border-left: 4px solid transparent;
+        }
+        .action-card.status-green { border-left-color: #3ac792; }
+        .action-card.status-yellow { border-left-color: #f8cc59; }
+        .action-card.status-red { border-left-color: #ff593e; }
+
+        /* Estilos para el Modal */
+        .modal { transition: opacity 0.3s ease; }
+        .corporate-objective-option {
+            cursor: pointer;
+            transition: background-color 0.2s, border-color 0.2s;
+        }
+        .corporate-objective-option.selected {
+            background-color: #fdebeb;
+            border-color: #e20039;
+            font-weight: 600;
+        }
+
+        /* Botones de Semaforo */
+        .status-btn {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            border: 2px solid transparent;
+            transition: all 0.2s ease;
+        }
+        .status-btn.selected {
+            transform: scale(1.1);
+            box-shadow: 0 0 0 3px rgba(0,0,0,0.1);
+        }
+        .status-btn-green { background-color: #3ac792; }
+        .status-btn-yellow { background-color: #f8cc59; }
+        .status-btn-red { background-color: #ff593e; }
+        .status-btn:hover { opacity: 0.8; }
+
+
+        /* Colores de Marca */
+        .bg-brand-red { background-color: #e20039; }
+        .hover\:bg-brand-red-dark:hover { background-color: #c00032; }
+        .text-brand-dark { color: #30302d; }
+        .bg-brand-green { background-color: #3ac792; }
+        .border-brand-red { border-color: #e20039; }
+        .bg-brand-blue { background-color: #4183ca }
+
+        /* Colores de acento para categorías */
+        .border-brand-blue { border-color: #374151; }
+        .border-brand-yellow { border-color: #6b7280; }
+        .border-brand-green { border-color: #9ca3af; }
+        .border-brand-red-orange { border-color: #d1d5db; }
+    </style>
+</head>
+<body class="text-gray-800">
+
+    <div class="container mx-auto p-4 md:p-8">
+        <header class="bg-white shadow-md rounded-lg p-6 mb-8 border-t-4 border-brand-red">
+            <h1 class="text-3xl font-bold text-brand-dark">Plataforma de Planificación Zonal</h1>
+            <p class="text-gray-600 mt-1">Ejercicio Económico: 01/07/2025 - 30/06/2026</p>
+            <div class="mt-4">
+                <label for="manager-select" class="block text-sm font-medium text-gray-700 mb-1">Seleccionar Gerente Regional:</label>
+                <select id="manager-select" class="w-full md:w-1/3 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-brand-red focus:border-brand-red block p-2.5">
+                    <option>2-Hernan Onaga</option>
+                    <option>6-Zona Corrientes</option>
+                    <option>8-Marcos Fanucchi</option>
+                    <option>12-Christian Habbaby</option>
+                    <option>14-Sergio Muñoz</option>
+                    <option>21-Zona Buenos Aires</option>
+                    <option>25-Leonardo Hernandez</option>
+                    <option>30-Zona Marcos Juárez</option>
+                    <option>32-Zona Reconquista</option>
+                    <option>35-Andrés Boca</option>
+                    <option>37-Novaira y Cía. S.C.</option>
+                    <option>39-Rosario Metropolitana</option>
+                    <option>42-Zona Paraná</option>
+                    <option>43-Mansilla y Asoc. S.C.</option>
+                    <option>46-Zona Mendoza</option>
+                    <option>47-Sergio Prestifilippo</option>
+                    <option>51-Porta y Porta S.C.</option>
+                    <option>54-Zona Pigué</option>
+                    <option>56-Mirko Landini</option>
+                    <option>57-Zona San Nicolás</option>
+                    <option>60-Zona Casilda</option>
+                    <option>61-Nocetti S.C.</option>
+                    <option>62-Zona San Juan</option>
+                    <option>64-Alejandro Gembarowski</option>
+                    <option>66-Zona San Luis</option>
+                    <option>67-Marcelo Zamudio</option>
+                    <option>70-Zona Comodoro Rivadavia</option>
+                    <option>72-Zona Río Gallegos</option>
+                    <option>74-Zona Tandil</option>
+                    <option>76-Adrian Rinaudo</option>
+                    <option>80-Raul Moreno</option>
+                    <option>84-Zona Concordia</option>
+                    <option>86-Jose Maria Marengo</option>
+                    <option>88-Javier Venier</option>
+                    <option>91-Fabian Ongaro</option>
+                    <option>95-Germán Fraunhofer</option>
+                    <option>96-Raúl Isaguirre</option>
+                    <option>97-Espeluse y Cía. S.C.</option>
+                </select>
+            </div>
+        </header>
+
+        <main class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- Columna de Objetivos Corporativos -->
+            <aside id="corporate-objectives-panel" class="lg:col-span-1 bg-white p-6 rounded-lg shadow-md h-fit sticky top-8">
+                <h2 class="text-xl font-bold mb-4 border-b pb-2 text-brand-dark">Objetivos Corporativos</h2>
+                <div class="space-y-6">
+                    <div class="border-l-4 border-brand-blue pl-4">
+                        <h3 class="font-semibold text-brand-dark">OBJETIVOS IGZ</h3>
+                        <ul class="list-disc list-inside text-sm text-gray-600 ml-2 space-y-1 mt-1">
+                            <li>Diversificación de Cartera</li>
+                            <li>Explotación de Cartera</li>
+                            <li>Prima Objetivo</li>
+                            <li>Crecimiento Prima (%)</li>
+                            <li>Penetración Comercial</li>
+                        </ul>
+                    </div>
+                    <div class="border-l-4 border-brand-yellow pl-4">
+                        <h3 class="font-semibold text-brand-dark">APERTURA DE PRIMA</h3>
+                         <ul class="list-disc list-inside text-sm text-gray-600 ml-2 space-y-1 mt-1">
+                            <li>AUTOMOTORES</li>
+                            <li>INCENDIO Y RIESGOS VARIOS</li>
+                            <li>PERSONAS</li>
+                            <li>RIESGOS AGROPECUARIOS Y FORESTALES</li>
+                            <li>RIESGOS DEL TRABAJO</li>
+                        </ul>
+                    </div>
+                    <div class="border-l-4 border-brand-green pl-4">
+                        <h3 class="font-semibold text-brand-dark">OBJETIVOS COMERCIALES: ALCANZAR</h3>
+                        <ul class="list-disc list-inside text-sm text-gray-600 ml-2 space-y-1 mt-1">
+                            <li>KR1. Vehículos vigentes</li>
+                            <li>KR2. Contratos RG de ART</li>
+                            <li>KR3. Pólizas de Retiro</li>
+                            <li>KR4. Pólizas de Incendio convencional</li>
+                            <li>KR5. Hectáreas totales</li>
+                        </ul>
+                    </div>
+                    <div class="border-l-4 border-brand-red-orange pl-4">
+                        <h3 class="font-semibold text-brand-dark">OBJETIVOS DE GESTIÓN</h3>
+                        <ul class="list-disc list-inside text-sm text-gray-600 ml-2 space-y-1 mt-1">
+                            <li>Clientes Vigentes</li>
+                            <li>Gestión de canales comerciales (KR)</li>
+                            <li class="ml-4">KR1. Satisfacción de Agencias</li>
+                            <li class="ml-4">KR2. Canales no tradicionales</li>
+                            <li class="ml-4">KR3. Agencias que suscriben ART</li>
+                        </ul>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Columna de Planificación Dinámica -->
+            <section id="planning-section" class="lg:col-span-2 space-y-6">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <button id="add-action-btn" class="w-full bg-brand-red text-white font-bold py-3 px-4 rounded-lg hover:bg-brand-red-dark focus:outline-none focus:ring-2 focus:ring-offset-2 ring-brand-red text-lg">
+                        + Añadir Acción Estratégica
+                    </button>
+                </div>
+                
+                <div id="actions-container" class="space-y-6">
+                    <!-- Las acciones se insertarán aquí dinámicamente -->
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Modal para añadir nueva acción -->
+    <div id="add-action-modal" class="modal fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-white rounded-lg shadow-xl w-full max-w-2xl transform transition-all">
+            <div class="p-6 border-b flex justify-between items-center">
+                <h2 id="modal-title" class="text-2xl font-bold text-brand-dark">Paso 1: Selecciona un Objetivo</h2>
+                <button id="modal-close-btn" class="text-gray-400 hover:text-gray-600 text-2xl">&times;</button>
+            </div>
+            
+            <div id="modal-objective-selection-view">
+                <div id="modal-objective-selection-list" class="p-6 max-h-80 overflow-y-auto"></div>
+                <div class="p-4 bg-gray-50 border-t flex justify-end">
+                    <button id="modal-continue-btn" class="bg-brand-blue text-white font-bold py-2 px-6 rounded-lg hover:bg-blue-dark disabled:bg-gray-400 disabled:cursor-not-allowed" disabled>
+                        Continuar
+                    </button>
+                </div>
+            </div>
+
+            <div id="modal-details-form-view" class="p-6 hidden">
+                <form id="action-details-form">
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700">Objetivos Corporativos Seleccionados:</label>
+                        <div id="selected-corporate-objectives-container" class="mt-2 flex flex-wrap gap-2"></div>
+                    </div>
+                    <div class="mb-4">
+                        <label for="action-comment" class="block text-sm font-medium text-gray-700">Describe tu acción personal:</label>
+                        <textarea id="action-comment" rows="3" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm" placeholder="Ej: Lanzar campaña de captación de nuevos productores en la zona norte." required></textarea>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                        <div>
+                            <label for="start-date" class="block text-sm font-medium text-gray-700">Fecha de Inicio:</label>
+                            <input type="date" id="start-date" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm" required>
+                        </div>
+                        <div>
+                            <label for="end-date" class="block text-sm font-medium text-gray-700">Fecha de Finalización:</label>
+                            <input type="date" id="end-date" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm" required>
+                        </div>
+                    </div>
+                    <div class="flex justify-end items-center gap-4 pt-4 border-t mt-6">
+                         <button type="button" id="modal-back-btn" class="text-gray-600 hover:text-gray-900">← Volver</button>
+                         <button type="submit" class="bg-brand-green text-white font-bold py-2 px-6 rounded-lg hover:bg-green-600">Guardar Acción</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Confirmación de Borrado -->
+    <div id="delete-confirm-modal" class="modal fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-white rounded-lg shadow-xl w-full max-w-md transform transition-all p-6">
+             <h2 class="text-xl font-bold text-brand-dark">Confirmar Borrado</h2>
+             <p class="text-gray-600 mt-2">¿Estás seguro de que quieres borrar esta acción? Esta operación no se puede deshacer.</p>
+             <div class="flex justify-end gap-4 mt-6">
+                <button id="cancel-delete-btn" class="bg-gray-200 text-gray-800 font-bold py-2 px-4 rounded-lg hover:bg-gray-300">Cancelar</button>
+                <button id="confirm-delete-btn" class="bg-brand-red text-white font-bold py-2 px-4 rounded-lg hover:bg-brand-red-dark">Sí, Borrar</button>
+             </div>
+        </div>
+    </div>
+    
+    <!-- Modal de Cambio de Estado -->
+    <div id="status-change-modal" class="modal fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-white rounded-lg shadow-xl w-full max-w-md transform transition-all p-6">
+            <h2 id="status-modal-title" class="text-xl font-bold text-brand-dark">Cambiar Estado</h2>
+            <p class="text-gray-600 mt-2">Añade un comentario opcional para este cambio de estado.</p>
+            <div class="mt-4">
+                <textarea id="status-comment-input" rows="3" class="w-full rounded-md border-gray-300 shadow-sm" placeholder="Ej: Suspendida por falta de información..."></textarea>
+            </div>
+            <div class="flex justify-end gap-4 mt-6">
+                <button id="cancel-status-change-btn" class="bg-gray-200 text-gray-800 font-bold py-2 px-4 rounded-lg hover:bg-gray-300">Cancelar</button>
+                <button id="confirm-status-change-btn" class="bg-brand-green text-white font-bold py-2 px-4 rounded-lg hover:bg-green-600">Guardar Cambio</button>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const managerSelect = document.getElementById('manager-select');
+            const actionsContainer = document.getElementById('actions-container');
+            
+            // Elementos del Modal de Añadir Acción
+            const addActionBtn = document.getElementById('add-action-btn');
+            const modal = document.getElementById('add-action-modal');
+            const modalTitle = document.getElementById('modal-title');
+            const modalCloseBtn = document.getElementById('modal-close-btn');
+            const modalBackBtn = document.getElementById('modal-back-btn');
+            const modalContinueBtn = document.getElementById('modal-continue-btn');
+            const objectiveSelectionView = document.getElementById('modal-objective-selection-view');
+            const objectiveSelectionList = document.getElementById('modal-objective-selection-list');
+            const detailsFormView = document.getElementById('modal-details-form-view');
+            const actionDetailsForm = document.getElementById('action-details-form');
+            const selectedObjectivesContainer = document.getElementById('selected-corporate-objectives-container');
+            const actionCommentInput = document.getElementById('action-comment');
+            const startDateInput = document.getElementById('start-date');
+            const endDateInput = document.getElementById('end-date');
+
+            // Elementos del Modal de Borrado
+            const deleteConfirmModal = document.getElementById('delete-confirm-modal');
+            const cancelDeleteBtn = document.getElementById('cancel-delete-btn');
+            const confirmDeleteBtn = document.getElementById('confirm-delete-btn');
+
+            // Elementos del Modal de Cambio de Estado
+            const statusChangeModal = document.getElementById('status-change-modal');
+            const statusModalTitle = document.getElementById('status-modal-title');
+            const statusCommentInput = document.getElementById('status-comment-input');
+            const cancelStatusChangeBtn = document.getElementById('cancel-status-change-btn');
+            const confirmStatusChangeBtn = document.getElementById('confirm-status-change-btn');
+
+            let db = {};
+            let corporateObjectives = [];
+            let selectedObjectivesForAction = [];
+            let actionIndexToDelete = null;
+            let statusChangeData = null; // Para guardar {index, newStatus}
+
+            const getCorporateObjectives = () => {
+                const objectivesPanel = document.getElementById('corporate-objectives-panel');
+                const categories = objectivesPanel.querySelectorAll('h3');
+                corporateObjectives = [];
+                categories.forEach(category => {
+                    const objectives = Array.from(category.nextElementSibling.querySelectorAll('li')).map(li => li.textContent.trim());
+                    corporateObjectives.push({
+                        category: category.textContent.trim(),
+                        objectives: objectives
+                    });
+                });
+            };
+
+            const loadData = () => {
+                const data = localStorage.getItem('regionalPlans2025_v6'); 
+                db = data ? JSON.parse(data) : {};
+            };
+
+            const saveData = () => {
+                localStorage.setItem('regionalPlans2025_v6', JSON.stringify(db));
+            };
+            
+            const renderPlan = () => {
+                const currentManager = managerSelect.value;
+                actionsContainer.innerHTML = '';
+                const managerPlan = db[currentManager] || {};
+                const actions = managerPlan.actions || [];
+
+                if (actions.length === 0) {
+                     actionsContainer.innerHTML = `<div class="bg-white p-6 rounded-lg shadow-md text-center">
+                        <h3 class="text-lg font-medium text-brand-dark">Aún no has definido acciones.</h3>
+                        <p class="text-gray-500 mt-1">Haz clic en "Añadir Acción Estratégica" para comenzar.</p>
+                    </div>`;
+                    return;
+                }
+
+                const actionsHTML = actions.map((action, index) => {
+                    const statusClass = action.status ? `status-${action.status}` : '';
+
+                    const objectivesHTML = action.objectives.map(obj => 
+                        `<span class="bg-blue-100 text-blue-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-full">${obj}</span>`
+                    ).join('');
+
+                    const commentsHTML = (action.comments || []).map(comment => {
+                        let statusClass = '';
+                        if (comment.text.includes('[ESTADO')) {
+                            if(comment.text.includes('VERDE')) statusClass = 'bg-green-100 text-green-800';
+                            else if(comment.text.includes('AMARILLO')) statusClass = 'bg-yellow-100 text-yellow-800';
+                            else if(comment.text.includes('ROJO')) statusClass = 'bg-red-100 text-red-800';
+                        } else {
+                            statusClass = 'bg-gray-100 text-gray-700';
+                        }
+                        return `
+                        <div class="text-xs p-2 rounded-lg mt-2 ${statusClass}">
+                            <p class="whitespace-pre-wrap">${comment.text}</p>
+                            <p class="text-gray-400 text-right text-xs mt-1">${comment.timestamp}</p>
+                        </div>`;
+                    }).join('');
+
+                    return `
+                    <div class="action-card bg-white rounded-lg shadow-md p-6 ${statusClass}">
+                        <div class="flex justify-between items-start gap-4">
+                            <div class="flex-1">
+                                <p class="font-semibold text-gray-800 text-lg">${action.comment}</p>
+                                <div class="text-sm text-gray-500 mt-2">
+                                <span><strong>Inicio:</strong> ${action.startDate}</span> | <span><strong>Fin:</strong> ${action.endDate}</span>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <button class="status-btn status-btn-green ${action.status === 'green' ? 'selected' : ''}" data-index="${index}" data-status="green"></button>
+                                <button class="status-btn status-btn-yellow ${action.status === 'yellow' ? 'selected' : ''}" data-index="${index}" data-status="yellow"></button>
+                                <button class="status-btn status-btn-red ${action.status === 'red' ? 'selected' : ''}" data-index="${index}" data-status="red"></button>
+                                <button class="delete-action-btn text-gray-400 hover:text-red-500 text-2xl ml-2" data-index="${index}">&times;</button>
+                            </div>
+                        </div>
+
+                        <div class="mt-4 border-t pt-4">
+                            <h4 class="text-xs font-semibold text-gray-500 uppercase tracking-wider">Objetivos Vinculados</h4>
+                            <div class="flex flex-wrap gap-2 mt-2">
+                                ${objectivesHTML}
+                            </div>
+                        </div>
+                        
+                        <div class="comments-section mt-4 border-t pt-4">
+                            <div class="comments-list space-y-2">
+                                ${commentsHTML}
+                            </div>
+                            <form class="add-comment-form mt-3 flex gap-2">
+                                <input type="text" placeholder="Añadir un comentario..." class="flex-grow text-sm border-gray-300 rounded-md shadow-sm" required>
+                                <button type="submit" class="text-sm bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold px-3 py-1.5 rounded-md" data-index="${index}">Añadir</button>
+                            </form>
+                        </div>
+                    </div>`;
+                }).join('');
+                
+                actionsContainer.innerHTML = actionsHTML;
+            };
+            
+            const openModal = () => {
+                modal.classList.remove('hidden');
+                objectiveSelectionList.innerHTML = '';
+                selectedObjectivesForAction = [];
+                modalContinueBtn.disabled = true;
+
+                corporateObjectives.forEach(cat => {
+                    const categoryTitle = document.createElement('h4');
+                    categoryTitle.className = 'text-md font-bold text-gray-500 mt-4 mb-2';
+                    categoryTitle.textContent = cat.category;
+                    objectiveSelectionList.appendChild(categoryTitle);
+
+                    const objectivesGrid = document.createElement('div');
+                    objectivesGrid.className = 'grid grid-cols-1 sm:grid-cols-2 gap-2';
+                    cat.objectives.forEach(obj => {
+                        const objectiveDiv = document.createElement('div');
+                        objectiveDiv.className = 'corporate-objective-option p-3 border rounded-lg text-sm';
+                        objectiveDiv.textContent = obj;
+                        objectiveDiv.dataset.objective = obj;
+                        objectivesGrid.appendChild(objectiveDiv);
+                    });
+                    objectiveSelectionList.appendChild(objectivesGrid);
+                });
+                detailsFormView.classList.add('hidden');
+                objectiveSelectionView.classList.remove('hidden');
+                modalTitle.textContent = "Paso 1: Selecciona uno o más Objetivos";
+            };
+
+            const closeModal = () => {
+                modal.classList.add('hidden');
+                actionDetailsForm.reset();
+                selectedObjectivesForAction = [];
+            };
+            
+            const showDetailsForm = () => {
+                selectedObjectivesContainer.innerHTML = selectedObjectivesForAction.map(obj => 
+                    `<span class="bg-blue-100 text-blue-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded">${obj}</span>`
+                ).join('');
+                objectiveSelectionView.classList.add('hidden');
+                detailsFormView.classList.remove('hidden');
+                modalTitle.textContent = "Paso 2: Describe tu Acción";
+            };
+            
+            const showObjectiveSelection = () => {
+                detailsFormView.classList.add('hidden');
+                objectiveSelectionView.classList.remove('hidden');
+                modalTitle.textContent = "Paso 1: Selecciona uno o más Objetivos";
+            };
+
+            // ---- Manejadores de eventos ----
+            managerSelect.addEventListener('change', renderPlan);
+            addActionBtn.addEventListener('click', openModal);
+            modalCloseBtn.addEventListener('click', closeModal);
+            modalBackBtn.addEventListener('click', showObjectiveSelection);
+            modalContinueBtn.addEventListener('click', showDetailsForm);
+
+            objectiveSelectionList.addEventListener('click', (e) => {
+                const target = e.target.closest('.corporate-objective-option');
+                if (target) {
+                    const objective = target.dataset.objective;
+                    target.classList.toggle('selected');
+                    if (target.classList.contains('selected')) {
+                        selectedObjectivesForAction.push(objective);
+                    } else {
+                        selectedObjectivesForAction = selectedObjectivesForAction.filter(o => o !== objective);
+                    }
+                    modalContinueBtn.disabled = selectedObjectivesForAction.length === 0;
+                }
+            });
+
+            actionDetailsForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const currentManager = managerSelect.value;
+                const newAction = {
+                    id: crypto.randomUUID(),
+                    comment: actionCommentInput.value,
+                    startDate: startDateInput.value,
+                    endDate: endDateInput.value,
+                    status: 'none',
+                    comments: [],
+                    objectives: selectedObjectivesForAction
+                };
+
+                if (!db[currentManager]) db[currentManager] = {};
+                if (!db[currentManager].actions) db[currentManager].actions = [];
+                db[currentManager].actions.push(newAction);
+                
+                saveData();
+                renderPlan();
+                closeModal();
+            });
+            
+            actionsContainer.addEventListener('click', (e) => {
+                const deleteBtn = e.target.closest('.delete-action-btn');
+                const statusBtn = e.target.closest('.status-btn');
+                const currentManager = managerSelect.value;
+                const managerPlan = db[currentManager];
+
+                if (deleteBtn) {
+                    actionIndexToDelete = deleteBtn.dataset.index;
+                    deleteConfirmModal.classList.remove('hidden');
+                } else if (statusBtn) {
+                    const { index, status } = statusBtn.dataset;
+                    const action = managerPlan?.actions?.[index];
+                    
+                    if (action) {
+                        const newStatus = action.status === status ? 'none' : status;
+                        statusChangeData = { index, newStatus };
+                        
+                        const statusText = newStatus.toUpperCase() || 'NINGUNO';
+                        statusModalTitle.textContent = `Cambiar Estado a "${statusText}"`;
+                        statusCommentInput.value = '';
+                        statusChangeModal.classList.remove('hidden');
+                    }
+                }
+            });
+
+            actionsContainer.addEventListener('submit', (e) => {
+                if (e.target.classList.contains('add-comment-form')) {
+                    e.preventDefault();
+                    const currentManager = managerSelect.value;
+                    const button = e.target.querySelector('button[type="submit"]');
+                    const input = e.target.querySelector('input');
+                    const { index } = button.dataset;
+                    const action = db[currentManager]?.actions?.[index];
+
+                    if (action && input.value.trim() !== '') {
+                        const newComment = {
+                            text: input.value.trim(),
+                            timestamp: new Date().toLocaleString('es-AR', { dateStyle: 'short', timeStyle: 'short' })
+                        };
+                        if (!action.comments) action.comments = [];
+                        action.comments.push(newComment);
+                        saveData();
+                        renderPlan();
+                    }
+                }
+            });
+
+            // Listeners para el modal de confirmación de borrado
+            cancelDeleteBtn.addEventListener('click', () => {
+                deleteConfirmModal.classList.add('hidden');
+                actionIndexToDelete = null;
+            });
+
+            confirmDeleteBtn.addEventListener('click', () => {
+                if (actionIndexToDelete !== null) {
+                    const currentManager = managerSelect.value;
+                    const managerPlan = db[currentManager];
+                    
+                    if (managerPlan && managerPlan.actions) {
+                        managerPlan.actions.splice(actionIndexToDelete, 1);
+                        saveData();
+                        renderPlan();
+                    }
+                }
+                deleteConfirmModal.classList.add('hidden');
+                actionIndexToDelete = null;
+            });
+
+            // Listeners para el modal de cambio de estado
+            cancelStatusChangeBtn.addEventListener('click', () => {
+                statusChangeModal.classList.add('hidden');
+                statusChangeData = null;
+            });
+            
+            confirmStatusChangeBtn.addEventListener('click', () => {
+                if (statusChangeData) {
+                    const { index, newStatus } = statusChangeData;
+                    const currentManager = managerSelect.value;
+                    const action = db[currentManager]?.actions?.[index];
+
+                    if (action) {
+                        action.status = newStatus;
+                        const reason = statusCommentInput.value.trim();
+
+                        if (reason !== '') {
+                             const statusText = newStatus.toUpperCase() || 'NINGUNO';
+                             const newComment = {
+                                text: `[ESTADO CAMBIADO A ${statusText}] ${reason}`,
+                                timestamp: new Date().toLocaleString('es-AR', { dateStyle: 'short', timeStyle: 'short' })
+                            };
+                            if (!action.comments) action.comments = [];
+                            action.comments.push(newComment);
+                        }
+                        
+                        saveData();
+                        renderPlan();
+                    }
+                }
+                statusChangeModal.classList.add('hidden');
+                statusChangeData = null;
+            });
+
+
+            // ---- Inicialización ----
+            getCorporateObjectives();
+            loadData();
+            renderPlan();
+        });
+    </script>
+</body>
+</html>
+
